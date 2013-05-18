@@ -17,13 +17,15 @@ function createPetal(petalLength, flowerHeight, yAngle) {
   var petalMaterial = new THREE.MeshLambertMaterial( { color: 0xCC5920 } );
 
   var cylinder = new THREE.Mesh( cylGeom, petalMaterial );
-  cylinder.rotation.x = 90 * Math.PI / 180;
-  cylinder.position.z = petalLength/2;
-  cylinder.position.y = flowerHeight;
+  cylinder.scale.x = 0.25;
+  cylinder.rotation.z = 90 * Math.PI / 180;
+  cylinder.position.x = - petalLength/2;
 
   var petal = new THREE.Object3D();
-  petal.rotation.y = yAngle * Math.PI / 180;
   petal.add(cylinder);
+  petal.rotation.z = -20 * Math.PI / 180;
+  petal.rotation.y = yAngle * Math.PI / 180;
+  petal.position.y = flowerHeight;
   return petal;
 }
 
