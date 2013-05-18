@@ -166,14 +166,43 @@ function createDrinkingBird() {
 	//   THREE.CylinderGeometry( XX, XX, XX, 32 ) for the tessellation.
 	//   The cylinder should have a radius of 5, length 200 and be at height Y=360
 	//   and rotated 90 degrees into position.
+  cylinder = new THREE.Mesh(new THREE.CylinderGeometry( 5, 5, 200, 32 ), crossbarMaterial );
+  cylinder.rotation.x = 90 * Math.PI/180;
+  cylinder.position.y = 360;
+  scene.add( cylinder );
+
 	// Nose: use headMaterial and
 	//   THREE.CylinderGeometry( XX, XX, XX, 32 ) for the tessellation.
 	//   The cone should have a radius of 6 at the tip, 14 at the bottom, height 70
 	//   It should be rotated 90 degrees and put into position at -70, 530.
+  cylinder = new THREE.Mesh(new THREE.CylinderGeometry( 6, 14, 70, 32 ), headMaterial );
+  cylinder.rotation.z = 90 * Math.PI/180;
+  cylinder.position.x = -70;
+  cylinder.position.y = 530;
+  scene.add( cylinder );
+
 	// Eyes: use eyeMaterial and
 	//   THREE.SphereGeometry( XX, 32, 16 ) for the tessellation.
 	//   Each sphere should have radius of 10 and be moved to X=-46, Y=560,
 	//   then rotated 20 degrees left and right to make a pair.
+  var sphereGeometry = new THREE.SphereGeometry(10, 32, 16);
+  sphere = new THREE.Mesh(sphereGeometry, eyeMaterial );
+  sphere.position.x = -46;
+  sphere.position.y = 560;
+
+  var leftEyeBall = new THREE.Object3D();
+  leftEyeBall.add(sphere);
+  leftEyeBall.rotation.y = 20 * Math.PI/180;
+  scene.add( leftEyeBall );
+
+  sphere = new THREE.Mesh(sphereGeometry, eyeMaterial );
+  sphere.position.x = -46;
+  sphere.position.y = 560;
+
+  var rightEyeBall = new THREE.Object3D();
+  rightEyeBall.add(sphere);
+  rightEyeBall.rotation.y = -20 * Math.PI/180;
+  scene.add( rightEyeBall );
 }
 
 function fillScene() {
