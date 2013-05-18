@@ -23,6 +23,8 @@ var ground = true;
 */
 function createCapsule( material, radius, top, bottom, segmentsWidth, openTop, openBottom )
 {
+  var cheeseStick = new THREE.Object3D();
+
 	// defaults
 	segmentsWidth = (segmentsWidth === undefined) ? 32 : segmentsWidth;
 	openTop = (openTop === undefined) ? false : openTop;
@@ -45,14 +47,29 @@ function createCapsule( material, radius, top, bottom, segmentsWidth, openTop, o
 	// pass in the cylinder itself, its desired axis, and the place to move the center.
 	makeLengthAngleAxisTransform( cyl, cylAxis, center );
 
+  cheeseStick.add(cyl);
+
 	// YOUR CODE HERE
 	// Here's a sphere's geometry. Use it to cap the cylinder if
 	// openTop and/or openBottom is false. Bonus points: use instancing!
 	var sphGeom = new THREE.SphereGeometry( radius, segmentsWidth, segmentsWidth/2 );
+  var sphere = null;
 
-	// You'll probably want to return something other than this...
-	return cyl;
+  if (!openTop) {
+    sphere = new THREE.Mesh(sphGeom, material);
+    sphere.matrixAutoUpdate = false;
+    sphere.matrix.makeTranslation( top.x, top.y, top.z );
+    cheeseStick.add(sphere);
+  }
 
+  if (!openBottom) {
+    sphere = new THREE.Mesh(sphGeom, material);
+    sphere.matrixAutoUpdate = false;
+    sphere.matrix.makeTranslation( bottom.x, bottom.y, bottom.z );
+    cheeseStick.add(sphere);
+  }
+
+	return cheeseStick;
 }
 
 // Transform cylinder to align with given axis and then move to center
