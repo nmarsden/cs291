@@ -34,24 +34,33 @@ function createHelix( material, radius, tube, radialSegments, tubularSegments, h
 	var helix = new THREE.Object3D();
 
 	var top = new THREE.Vector3();
+	var bottom = new THREE.Vector3();
 
 	var sine_sign = clockwise ? 1 : -1;
 
 	///////////////
 	// YOUR CODE HERE: remove spheres, use capsules instead, going from point to point.
 	//
-	var sphGeom = new THREE.SphereGeometry( tube, tubularSegments, tubularSegments/2 );
-	for ( var i = 0; i <= arc*radialSegments ; i++ )
+	for ( var i = 1; i <= arc*radialSegments ; i++ )
 	{
 		// going from X to Z axis
-		top.set( radius * Math.cos( i * 2*Math.PI / radialSegments ),
-		height * (i/(arc*radialSegments)) - height/2,
-		sine_sign * radius * Math.sin( i * 2*Math.PI / radialSegments ) );
+		top.set(
+      radius * Math.cos( i * 2*Math.PI / radialSegments ),
+		  height * (i/(arc*radialSegments)) - height/2,
+		  sine_sign * radius * Math.sin( i * 2*Math.PI / radialSegments )
+    );
 
-		var sphere = new THREE.Mesh( sphGeom, material );
-		sphere.position.copy( top );
+    bottom.set(
+      radius * Math.cos( (i-1) * 2*Math.PI / radialSegments ),
+      height * ((i-1)/(arc*radialSegments)) - height/2,
+      sine_sign * radius * Math.sin( (i-1) * 2*Math.PI / radialSegments )
+    );
 
-		helix.add( sphere );
+    var openTop = (i < arc*radialSegments);
+    var openBottom = false;
+    var capsule = createCapsule(material, tube, top, bottom, tubularSegments, openTop, openBottom);
+
+		helix.add( capsule );
 	}
 	///////////////
 
