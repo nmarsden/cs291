@@ -23,10 +23,14 @@ function fillScene() {
 	scene.add( light );
 
 	// GROUND
-	// Student: texture is located at URL /media/img/cs291/textures/grass512x512.jpg
-	var solidGround = new THREE.Mesh(
-		new THREE.PlaneGeometry( 10000, 10000, 100, 100 ),
-		new THREE.MeshLambertMaterial( { color: 0xFFFFFF } ) );
+  var groundTexture = THREE.ImageUtils.loadTexture( '/media/img/cs291/textures/grass512x512.jpg' );
+  groundTexture.repeat.set( 10, 10 );
+  groundTexture.wrapS = THREE.RepeatWrapping;
+  groundTexture.wrapT = THREE.RepeatWrapping;
+
+  var groundMaterial = new THREE.MeshLambertMaterial( { map: groundTexture } );
+
+  var solidGround = new THREE.Mesh( new THREE.PlaneGeometry( 10000, 10000, 100, 100 ), groundMaterial );
 	solidGround.rotation.x = - Math.PI / 2;
 
 	scene.add( solidGround );
