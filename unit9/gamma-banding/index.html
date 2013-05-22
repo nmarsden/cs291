@@ -1,0 +1,14 @@
+<html>
+	<head>Unit 9: Gamma Banding Solution</head>
+    <body>
+    See console for answer
+	</body>
+    <script type="text/javascript">
+        var count = 0, output = {}, level, GAMMA_CORRECTION = 1/2.2;
+        for (var i=0; i<=255; i++) {
+            level = Math.round(Math.pow(i/255, GAMMA_CORRECTION) * 255);
+            output[level] = (output[level] === undefined) ? 1 : (output[level] + 1);
+        }
+        console.log("Different levels output: " + Object.keys(output).length);
+    </script>
+</html>
